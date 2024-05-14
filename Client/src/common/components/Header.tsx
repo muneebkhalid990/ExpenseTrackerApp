@@ -24,6 +24,8 @@ function Header() {
 
   if (!isLoggedIn) {
     localStorage.removeItem("token");
+    // localStorage.removeItem("income");
+    // localStorage.removeItem("expense");
     dispatch(AuthActionCreator.clearAuthError());
   }
 

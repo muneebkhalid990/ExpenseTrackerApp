@@ -9,11 +9,11 @@ interface ListProps {
 }
 
 const List: React.FC<ListProps> = ({ transactions , type}) => {
-  console.log("transactions", transactions);
+  console.log("transactions...........0123", transactions);
   return (
     <div className="w-72 flex flex-col py-10 gap-2">
       <h3 className="py-4 font-bold text-xl text-center">History</h3>
-      {transactions[0].map((transaction: any, index: any) => (
+      {transactions.map((transaction: any, index: any) => (
         <Transaction key={index} transaction={transaction} type={type} />
       ))}
     </div>

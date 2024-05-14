@@ -16,7 +16,7 @@ const expensesController = {
           message: `Amount should be a Positive Number`,
         });
       }
-      await expenseModel.create({
+      const newExpense = await expenseModel.create({
         title,
         amount,
         category,
@@ -24,9 +24,9 @@ const expensesController = {
         // date,
         userId: uId
       });
-
+      const id = newExpense.id;
       return res.status(201).json({
-        resData: { title, amount, category, description },
+        resData: {id, title, amount, category, description },
         message: `Expense Field Added`,
       });
     } catch (error) {

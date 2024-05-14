@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import Graph from "../components/Graph";
+import Graph, { GraphData } from "../components/Graph";
 import InputField from "../ui/elements/form/InputField";
 import CustomButton from "../ui/elements/form/CustomButton";
 import List from "../components/List";
@@ -7,10 +7,12 @@ import { useDispatch } from "react-redux";
 import { ExpenseActionCreator } from "../../redux/actions/expense.actions";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { calculateAggregatedData } from "../components/GraphData";
 
 const Expense = () => {
   const dispatch = useDispatch();
   const expenses = useSelector((state: RootState) => state.expense.expenses);
+  const aggregatedData: GraphData = calculateAggregatedData(expenses);
   const {
     control,
     formState: { errors },
@@ -21,7 +23,7 @@ const Expense = () => {
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
     await dispatch(ExpenseActionCreator.addExpenseRequest(data));
-    // dispatch(ExpenseActionCreator.expenseRequest());
+    dispatch(ExpenseActionCreator.expenseRequest());
 
     reset();
   });
@@ -34,7 +36,7 @@ const Expense = () => {
     <>
       <div className="flex flex-col justify-center md:flex-row md:justify-around bg-gray-100 p-8 rounded-lg shadow-lg">
         <div className="md:w-1/2 p-4 bg-white rounded-lg shadow-md flex flex-col justify-start items-center">
-          <Graph />
+        <Graph data={aggregatedData} type="expense" />
         </div>
         <div className="flex flex-col max-w-md justify-center md:w-1/2 p-4 bg-white rounded-lg shadow-md">
           <form className="flex flex-col gap-5 mx-auto" onSubmit={onSubmit}>
@@ -78,7 +80,7 @@ const Expense = () => {
             </div>
           </form>
           <div className="mx-auto mt-8">
-            <List transactions={[expenses]} type = "expense" />
+            <List transactions={expenses} type = "expense" />
           </div>
         </div>
       </div>

@@ -125,9 +125,10 @@ function* incomeAddSaga(action: any): Generator<any, void, any> {
             category: action.payload.category,
             description: action.payload.description,
         })
-        // console.log("response##################", response)
+        console.log("Add Income response##################", response)
         yield put(
             IncomeActionCreator.addIncomeSuccess({
+                id: response.data.resData.id,
                 title: response.data.resData.title,
                 amount: response.data.resData.amount,
                 category: response.data.resData.category,
@@ -176,7 +177,7 @@ function* incomeEditSaga(action: any): Generator<any, void, any> {
             category: action.payload.category,
             description: action.payload.description,
         })
-        console.log("response##################", response)
+        console.log("Income Edit response##################", response)
         yield put(
             IncomeActionCreator.editIncomeSuccess(response.data.income)
         );

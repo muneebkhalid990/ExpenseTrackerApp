@@ -152,6 +152,7 @@ function* expenseAddSaga(action: any): Generator<any, void, any> {
         console.log(" Expense Add response##################", response)
         yield put(
             ExpenseActionCreator.addExpenseSuccess({
+                id: response.data.resData.id,
                 title: response.data.resData.title,
                 amount: response.data.resData.amount,
                 category: response.data.resData.category,

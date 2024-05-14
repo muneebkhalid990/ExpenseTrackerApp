@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import Graph from "../components/Graph";
+import Graph, { GraphData } from "../components/Graph";
 import InputField from "../ui/elements/form/InputField";
 import CustomButton from "../ui/elements/form/CustomButton";
 import List from "../components/List";
@@ -7,11 +7,14 @@ import { useDispatch } from "react-redux";
 import { IncomeActionCreator } from "../../redux/actions/income.actions";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { calculateAggregatedData } from "../components/GraphData";
 
 const Income = () => {
   const dispatch = useDispatch();
   const incomes = useSelector((state: RootState) => state.income.incomes);
-  // const error = useSelector((state: RootState) => state.income.error); 
+  console.log("Incomes ................ 0123",incomes);
+  const aggregatedData: GraphData = calculateAggregatedData(incomes);
+  console.log("Aggregated Data .....", aggregatedData);
   const {
     control,
     formState: { errors },
@@ -31,11 +34,12 @@ const Income = () => {
     dispatch(IncomeActionCreator.incomeRequest());
   }, [dispatch]);
 
+
   return (
     <>
       <div className="flex flex-col justify-center md:flex-row md:justify-around bg-gray-100 p-8 rounded-lg shadow-lg">
         <div className="md:w-1/2 p-4 bg-white rounded-lg shadow-md flex flex-col justify-start items-center">
-          <Graph />
+          <Graph data={aggregatedData} type="income" />
         </div>
         <div className="flex flex-col max-w-md justify-center md:w-1/2 p-4 bg-white rounded-lg shadow-md">
           <form className="flex flex-col gap-5 mx-auto" onSubmit={onSubmit}>
@@ -79,7 +83,7 @@ const Income = () => {
             </div>
           </form>
           <div className="mx-auto mt-8">
-            <List transactions={[incomes]} type="income" />
+            <List transactions={incomes} type="income" />
           </div>
         </div>
       </div>

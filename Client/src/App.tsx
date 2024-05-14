@@ -10,13 +10,13 @@ import Layout from "./common/layouts/Layout";
 import "./App.css";
 import Register from "./common/pages/Register";
 import SignIn from "./common/pages/SignIn";
-import Graph from "./common/components/Graph";
 import Income from "./common/pages/Income";
 import Expense from "./common/pages/Expense";
 import { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { ToastContainer } from 'react-toastify'; // Import ToastContainer
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
+import Dashboard from "./common/pages/Dashboard";
 // import { RootState } from "./redux/reducers/auth.reducer";
 
 interface ProtectedRouteProps {
@@ -45,7 +45,7 @@ function App() {
             element={
               <ProtectedRoute user={isUser}>
                 <Layout>
-                  <Graph />
+                  <Dashboard />
                 </Layout>
               </ProtectedRoute>
             }

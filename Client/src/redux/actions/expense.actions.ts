@@ -68,6 +68,7 @@ export const ExpenseActionCreator = {
     };
   },
   addExpenseSuccess: (payload: {
+    id: number;
     title: string;
     amount: number;
     category: string;

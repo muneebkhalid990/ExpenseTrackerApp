@@ -56,7 +56,7 @@ export const IncomeActionCreator = {
       payload
     };
   },
-  addIncomeSuccess: (payload: { title: string, amount: number, category: string, description: string }) => {
+  addIncomeSuccess: (payload: {id:number, title: string, amount: number, category: string, description: string }) => {
     return {
       type: IncomeActionTypes.ADD_INCOME_SUCCESS,
       payload

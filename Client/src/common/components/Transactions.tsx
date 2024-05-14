@@ -18,7 +18,7 @@ export interface TransactionData {
   amount: number;
   category: string;
   description: string;
-  map: any;
+  // map: any;
 }
 
 interface TransactionProps {
@@ -44,7 +44,7 @@ const Transaction: React.FC<TransactionProps> = ({ transaction , type }) => {
       dispatch(ExpenseActionCreator.editExpenseRequest(editedTransaction));
     }
     
-    setEditedTransaction(editedTransaction);
+    // setEditedTransaction(editedTransaction);
     setIsEditing(false);
   };
 

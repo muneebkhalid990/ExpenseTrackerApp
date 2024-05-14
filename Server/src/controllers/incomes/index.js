@@ -19,7 +19,7 @@ const incomeController = {
           message: `Amount should be a Positive Number`,
         });
       }
-      await incomeModel.create({
+      const newIncome = await incomeModel.create({
         title,
         amount,
         category,
@@ -27,8 +27,10 @@ const incomeController = {
         userId: uId
       });
 
+      const id = newIncome.id;
+
       return res.status(201).json({
-        resData: { title, amount, category, description },
+        resData: {id, title, amount, category, description },
         message: `Income Field Added`,
       });
     } catch (error) {
