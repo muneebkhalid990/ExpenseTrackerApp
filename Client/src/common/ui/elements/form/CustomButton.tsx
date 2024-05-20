@@ -10,7 +10,7 @@ const CustomButton: React.FC<ButtonProps> = ({
       <button
         type={type}
         onClick={onClick}
-        className=" w-44 rounded-lg overflow-hidden py-1 bg-emerald-100 text-black p-2 font-bold hover:bg-emerald-300 hover:border-black hover:border-2 text-xl border-2 border-teal-700"
+        className="inline-block px-6 py-3 text-lg font-semibold leading-none text-white bg-teal-500 rounded-lg shadow-md hover:bg-teal-600 focus:outline-none focus:bg-teal-600 transform transition-transform duration-200 ease-in-out hover:scale-105"
       >
         {buttonTitle}
       </button>

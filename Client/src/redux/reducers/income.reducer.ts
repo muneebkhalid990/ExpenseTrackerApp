@@ -2,7 +2,7 @@
 import { IncomeActionTypes } from "../actions/income.actions";
 
 interface Income {
-  id: any;
+  id: number;
   title: string;
   amount: number;
   category: string;

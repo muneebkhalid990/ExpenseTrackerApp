@@ -50,7 +50,7 @@ const Register = () => {
         className="w-full max-w-md bg-white shadow-md rounded-lg px-8 py-6"
         onSubmit={onSubmit}
       >
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+        <h2 className="text-4xl font-semibold text-center text-teal-700 mb-8 pb-2 font-serif">
           Create an Account
         </h2>
         <div className="mb-4">

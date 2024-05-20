@@ -10,5 +10,6 @@ userRouter.delete("/deleteUser/:id",userController.delete);
 userRouter.put("/updateUser/:id",userController.update);
 userRouter.post("/forgetPassword",userController.forgetPassword);
 userRouter.get("/resetPassword",userController.resetPassword);
+userRouter.post("/verifyOtp",userController.verifyOtp);
 
 export default userRouter;

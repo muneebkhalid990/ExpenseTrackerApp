@@ -69,6 +69,40 @@ const register = async (payload: {
   return data;
 };
 
+const otpVerification = async (payload: { otp: string }) => {
+  console.log("in Otp api call payload", payload);
+  const token = localStorage.getItem('token');
+  const data = await axios
+    .post<IAuth>(
+      "http://localhost:3300/user/verifyOtp",
+      { otp: payload.otp},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        withCredentials: true,
+      }
+    )
+    .then((res) => {
+      console.log("res........", res);
+      return res;
+    })
+    .catch((err) => {
+      
+      console.log("err..........", err);
+      return err.response;
+    });
+    console.log("Axi Data.....",data);
+  return data;
+};
+
+
+// Sagassssssssssssssssssssssssssssssssssssssss
+
+
 function* registerSaga(action: any): Generator<any, void, any> {
   try {
     console.log("register action...............", action);
@@ -107,8 +141,10 @@ function* loginSaga(action: any): Generator<any, void, any> {
       yield put(
         AuthActionCreator.loginSuccess({
           token: response.data.token,
+          // otp: response.data.OTP,
         })
       );
+      
       const token = response.data.token;
       localStorage.setItem("token", token);
     } else {
@@ -123,11 +159,34 @@ function* loginSaga(action: any): Generator<any, void, any> {
   }
 }
 
+function* OtpVerficationSaga(action: any): Generator<any, void, any> {
+  try {
+    console.log("action...............", action);
+    const response: any = yield call(otpVerification, {
+      otp: action.payload.otp,
+    });
+    console.log("response##################", response);
+    if(response.data.otp){
+      yield put(
+        AuthActionCreator.otpVerificationSuccess()
+      );
+    }else{
+      throw new Error(response.data.message);
+    }
+  } catch (error: any) {
+    // console.log("in catch")
+    console.log("Error123456", error.message);
+    yield put(
+      AuthActionCreator.otpVerificationFailure(error.message)
+    );
+  }
+}
 
 function* authSaga() {
   console.log("asdasdd...................");
   yield takeLatest(AuthActionTypes.LOGIN_REQUEST, loginSaga);
   yield takeLatest(AuthActionTypes.REGISTER_REQUEST, registerSaga);
+  yield takeLatest(AuthActionTypes.VERIFY_OTP_REQUEST, OtpVerficationSaga);
 }
 
 export default authSaga;

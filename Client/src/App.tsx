@@ -14,9 +14,10 @@ import Income from "./common/pages/Income";
 import Expense from "./common/pages/Expense";
 import { ReactNode } from "react";
 import { useSelector } from "react-redux";
-import { ToastContainer } from 'react-toastify'; // Import ToastContainer
-import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 import Dashboard from "./common/pages/Dashboard";
+import OtpVerification from "./common/pages/Otp";
 // import { RootState } from "./redux/reducers/auth.reducer";
 
 interface ProtectedRouteProps {
@@ -26,7 +27,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ user, children }) => {
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/sign-in" replace />;
   } else {
     return children;
   }
@@ -34,6 +35,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ user, children }) => {
 
 function App() {
   const isUser = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const OtpVerified = useSelector((state: RootState)=>state.auth.isOtpVerified);
 
   return (
     <>
@@ -43,7 +45,7 @@ function App() {
           <Route
             path="/"
             element={
-              <ProtectedRoute user={isUser}>
+              <ProtectedRoute user={OtpVerified}>
                 <Layout>
                   <Dashboard />
                 </Layout>
@@ -52,12 +54,10 @@ function App() {
           />
 
           <Route
-            path="/about"
+            path="/otp"
             element={
               <ProtectedRoute user={isUser}>
-                <Layout>
-                  <p>About Page</p>
-                </Layout>
+                <OtpVerification/>
               </ProtectedRoute>
             }
           />
@@ -80,7 +80,7 @@ function App() {
           <Route
             path="/income"
             element={
-              <ProtectedRoute user={isUser}>
+              <ProtectedRoute user={OtpVerified}>
                 <Layout>
                   <Income />
                 </Layout>
@@ -90,7 +90,7 @@ function App() {
           <Route
             path="/expense"
             element={
-              <ProtectedRoute user={isUser}>
+              <ProtectedRoute user={OtpVerified}>
                 <Layout>
                   <Expense />
                 </Layout>

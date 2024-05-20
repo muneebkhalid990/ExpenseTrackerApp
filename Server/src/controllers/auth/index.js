@@ -129,25 +129,28 @@ const authController = {
           await user.update({ jwtToken: token });
           await user.save();
 
-          // const OTP = otpGenerator.generate(6, {
-          //   lowerCaseAlphabets: false,
-          //   upperCaseAlphabets: false,
-          //   specialChars: false,
-          // });
+          const OTP = otpGenerator.generate(6, {
+            lowerCaseAlphabets: false,
+            upperCaseAlphabets: false,
+            specialChars: false,
+          });
 
-          // await user.update({ otp: OTP });
+          await user.update({ otp: OTP });
 
-          // demoEmail({
-          //   from: "hi@demomailtrap.com",
-          //   to: "muneeb.ahmad@piecyfer.com",
-          //   subject: "Login Notification",
-          //   text: `We detected a new login Your OTP : ${OTP} <br> if that wasn't you please Contact Support or Reset password`,
-
-          // },console.log("its working"));
+          demoEmail(
+            {
+              from: "hi@demomailtrap.com",
+              to: "muneeb.ahmad@piecyfer.com",
+              subject: "Login Notification",
+              text: `We detected a new login Your OTP : ${OTP} <br> if that wasn't you please Contact Support or Reset password`,
+            },
+            // console.log("its working")
+          );
 
           return res.status(200).json({
-            message: `User Login`,
+            message: `User Login Successfully`,
             token,
+            // OTP,
           });
         } else {
           return res.status(401).json({
@@ -214,22 +217,20 @@ const authController = {
       expiry.setMinutes(expiry.getMinutes());
       const currentTime = expiry.getTime();
 
-      if(currentTime < user.expiryTimestamps)
-      {
+      if (currentTime < user.expiryTimestamps) {
         if (user.eToken == eToken && user.verified !== true) {
           await user.update({ verified: true });
           await user.save();
-  
+
           return res.status(201).json({
             message: `Email Verified`,
           });
-        } 
-      }else {
+        }
+      } else {
         return res.status(200).json({
           message: "The link has Expired",
         });
       }
-
     } catch (error) {
       return res.status(500).json({
         message: "Something bad happened",

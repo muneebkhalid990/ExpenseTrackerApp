@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import InputField from "../ui/elements/form/InputField";
@@ -8,11 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import store from "../../redux/stores/global.store";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import OtpVerification from "./Otp";
 
 const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const authError = useSelector((state: RootState) => state.auth.error);
+
+  // const authSuccess= useSelector((state: RootState)=>state.auth.message);
   console.log("Auth Error ......", authError);
   const {
     control,
@@ -21,13 +24,13 @@ const SignIn = () => {
   } = useForm<SignInFormData>();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    console.log("Sign In data .....",data);
     dispatch(AuthActionCreator.loginRequest(data));
   });
 
   useEffect(() => {
     const handleRedirect = () => {
-      navigate("/");
+      navigate("/otp");
     };
 
     const unsubscribe = store.subscribe(() => {
@@ -43,6 +46,7 @@ const SignIn = () => {
   }, [navigate]);
 
   useEffect(() => {
+    // const isAuthenticated = store.getState().auth.isAuthenticated;
     if (authError) {
       toast.error(authError, {
         className:
@@ -50,21 +54,24 @@ const SignIn = () => {
         bodyClassName: "text-black",
         progressClassName: "bg-teal-600",
       });
-    }
+    } 
+    // else if (isAuthenticated) {
+    //   toast.success("Login Success", {
+    //     className:
+    //       "bg-teal-300 text-black font-serif font-medium border border-teal-500 shadow-md p-4 rounded-md",
+    //     bodyClassName: "text-black",
+    //     progressClassName: "bg-teal-600",
+    //   });
+    // }
   }, [authError]);
 
   return (
     <div className="w-full flex justify-center">
-      {/* {authError && (
-        <div className="text-red-600 font-bold text-center mb-4">
-          {authError.error}
-        </div>
-      )} */}
       <form
         className="w-full max-w-md bg-white shadow-md rounded-lg px-8 py-6"
         onSubmit={onSubmit}
       >
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+        <h2 className="text-4xl font-semibold text-center text-teal-700 mb-8 pb-2 font-serif">
           Sign In
         </h2>
 

@@ -21,29 +21,33 @@ interface GraphProps {
   type: string;
 }
 
-const Graph: React.FC<GraphProps> = ({ data , type}) => {
+const Graph: React.FC<GraphProps> = ({ data, type }) => {
   const [totalAmount, setTotalAmount] = useState<number>(0);
 
-  const storeAmount= totalAmount;
+  const storeAmount = totalAmount;
+  let name = "Total";
 
-  if(type=="dashboard")
-    {
-      useEffect(() => {
-        const amount = data.IncomeTotal - data.ExpenseTotal;
-        setTotalAmount(amount);
-      }, []);     
-    }
-    else{
-      useEffect(() => {
-        const newTotalAmount = Object.values(data).reduce(
-          (acc, val) => acc + Number(val),
-          0
-        );
-        setTotalAmount(newTotalAmount);
-      }, [data]);
-    }
+  if (type == "dashboard") {
+    name = "Total Saving";
+    useEffect(() => {
+      const amount = data.Incomes - data.Expenses;
+      setTotalAmount(amount);
+    }, []);
+  }
+  else {
+    useEffect(() => {
+      const newTotalAmount = Object.values(data).reduce(
+        (acc, val) => acc + Number(val),
+        0
+      );
+      setTotalAmount(newTotalAmount);
+    }, [data]);
 
-  localStorage.setItem(type, storeAmount.toString());
+
+    localStorage.setItem(type, storeAmount.toString());
+  }
+
+
 
   const generateColors = (count: number): string[] => {
     const colors = [];
@@ -124,7 +128,7 @@ const Graph: React.FC<GraphProps> = ({ data , type}) => {
         <div className=" chart relative">
           <Doughnut {...config}></Doughnut>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-            <h3 className="mb-2 font-bold text-xl text-gray-800">Total</h3>
+            <h3 className="mb-2 font-bold text-xl text-gray-800">{name}</h3>
             <span className="block text-2xl text-emerald-400">
               ${totalAmount}
             </span>

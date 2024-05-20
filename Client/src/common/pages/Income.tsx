@@ -25,7 +25,7 @@ const Income = () => {
   const onSubmit = handleSubmit((data) => {
     console.log(data);
     dispatch(IncomeActionCreator.addIncomeRequest(data));
-    dispatch(IncomeActionCreator.incomeRequest());
+    // dispatch(IncomeActionCreator.incomeRequest());
 
     reset();
   });
@@ -44,7 +44,7 @@ const Income = () => {
         <div className="flex flex-col max-w-md justify-center md:w-1/2 p-4 bg-white rounded-lg shadow-md">
           <form className="flex flex-col gap-5 mx-auto" onSubmit={onSubmit}>
             <div className="grid gap-4">
-              <h2 className="text-3xl font-bold text-center">Transaction</h2>
+              <h2 className="text-4xl font-semibold text-center text-teal-700 mb-3 pb-2 font-serif">Transaction</h2>
               <InputField
                 name="title"
                 label="Title"

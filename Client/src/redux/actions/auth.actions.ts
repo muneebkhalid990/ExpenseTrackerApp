@@ -8,6 +8,9 @@ export enum AuthActionTypes {
   REGISTER_SUCCESS = "REGISTER_SUCCESS",
   REGISTER_FAILURE = "REGISTER_FAILURE",
   CLEAR_AUTH_ERROR = "CLEAR_AUTH_ERROR",
+  VERIFY_OTP_REQUEST = "VERIFY_OTP_REQUEST",
+  VERIFY_OTP_SUCCESS = "VERIFY_OTP_SUCCESS",
+  VERIFY_OTP_FAILURE = "VERIFY_OTP_FAILURE",
   LOGOUT = "LOGOUT"
 }
 
@@ -51,6 +54,23 @@ export const AuthActionCreator = {
   clearAuthError: () => {
     return {
       type: AuthActionTypes.CLEAR_AUTH_ERROR,
+    };
+  },
+  otpVerificationRequest: ( payload: {otp: string }) => {
+    return {
+      type: AuthActionTypes.VERIFY_OTP_REQUEST,
+      payload
+    };
+  },
+  otpVerificationSuccess: () => {
+    return {
+      type: AuthActionTypes.VERIFY_OTP_SUCCESS,
+    };
+  },
+  otpVerificationFailure: (payload: {error: string}) => {
+    return {
+      type: AuthActionTypes.VERIFY_OTP_FAILURE,
+      payload
     };
   },
   logout: ()=>{

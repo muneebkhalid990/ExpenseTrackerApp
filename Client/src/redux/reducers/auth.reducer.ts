@@ -3,23 +3,21 @@ import { AuthActionTypes } from "../actions/auth.actions";
 
 export interface AuthState {
   isAuthenticated: boolean;
+  isOtpVerified: boolean;
   token: string | null;
   // error: string | null;
-  error: any
+  error: any;
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
+  isOtpVerified: false,
   token: null,
   error: null,
 };
 
-// export interface RootState {
-//   auth: AuthState;
-// }
-
 const authReducer = (state = initialState, action: any): AuthState => {
-  // console.log("action", action);
+  console.log("Reducer action.......................", action);
   switch (action.type) {
     case AuthActionTypes.LOGIN_REQUEST:
       return {
@@ -30,7 +28,7 @@ const authReducer = (state = initialState, action: any): AuthState => {
       return {
         ...state,
         isAuthenticated: true,
-        token: action.payload,
+        token: action.payload.token,
         error: null,
       };
     case AuthActionTypes.LOGIN_FAILURE:
@@ -64,6 +62,7 @@ const authReducer = (state = initialState, action: any): AuthState => {
       return {
         ...state,
         isAuthenticated: false,
+        isOtpVerified: false,
         token: null,
         error: null,
       };
@@ -71,6 +70,25 @@ const authReducer = (state = initialState, action: any): AuthState => {
       return {
         ...state,
         error: null,
+      };
+    case AuthActionTypes.VERIFY_OTP_REQUEST:
+      return {
+        ...state,
+        error: null,
+      };
+    case AuthActionTypes.VERIFY_OTP_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isOtpVerified: true,
+        error: null,
+      };
+    case AuthActionTypes.VERIFY_OTP_FAILURE:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isOtpVerified: false,
+        error: action.payload,
       };
     default:
       return state;

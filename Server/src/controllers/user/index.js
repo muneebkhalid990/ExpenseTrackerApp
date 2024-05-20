@@ -136,6 +136,35 @@ const userController = {
       });
     }
   },
+  verifyOtp: async (req, res) => {
+
+    const id = req.user.id;
+    try {
+      const { otp } = req.body;
+
+      const user = await userModel.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (user.otp === otp) {
+        return res.status(200).json({
+          message: `OTP Verification Success`,
+          otp,
+        });
+      } else {
+        return res.status(401).json({
+          message: `Invalid OTP`,
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        error,
+        message: `Something bad happened`,
+      });
+    }
+  },
 };
 
 export default userController;

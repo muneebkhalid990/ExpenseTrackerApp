@@ -1,24 +1,21 @@
-import React from "react";
 import Graph from "../components/Graph";
 
 const Dashboard = () => {
   const TotalIncomeString = localStorage.getItem("income") || "0";
   const TotalExpenseString = localStorage.getItem("expense") || "0";
 
-  // Parse the strings to numbers
-  const IncomeTotal = parseFloat(TotalIncomeString);
-  const ExpenseTotal = parseFloat(TotalExpenseString);
+  const Incomes = parseFloat(TotalIncomeString);
+  const Expenses = parseFloat(TotalExpenseString);
 
-  // Create an object
   const Total = {
-    IncomeTotal,
-    ExpenseTotal,
+    Incomes,
+    Expenses,
   };
 
   console.log("Total.............",Total);
 
   return (
-  <div>
+  <div className="md:w-auto p-4 bg-white rounded-lg shadow-md flex flex-col justify-start items-center">
     <Graph data={Total} type="dashboard"/>
   </div>
 );
